@@ -1,6 +1,5 @@
 package com.agb.movielist.presentation.search
 
-import com.agb.movielist.domain.utils.enums.MovieCategory
 import com.agb.movielist.presentation.model.MovieSmallDetailsUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -11,8 +10,8 @@ data class SearchUIState(
     val errorMessage: String = "Error",
     val movies: List<MovieSmallDetailsUIState> = emptyList(),
 ) {
-    val isDataVisible: Boolean = movies.isNotEmpty() && !isLoading
-    val isResultEmpty: Boolean = movies.isEmpty()
+    val isDataVisible: Boolean = true && !isLoading
+    val isResultEmpty: Boolean = false
 }
 
 

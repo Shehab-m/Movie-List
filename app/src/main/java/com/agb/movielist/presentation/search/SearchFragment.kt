@@ -4,13 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.agb.movielist.R
 import com.agb.movielist.databinding.FragmentSearchBinding
 import com.agb.movielist.presentation.base.BaseFragment
-import com.agb.movielist.presentation.home.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -2,9 +2,9 @@ package com.agb.movielist.data.repository
 
 import android.util.Log
 import com.agb.movielist.data.local.daos.MoviesDao
-import com.agb.movielist.data.repository.mapper.toEntity
 import com.agb.movielist.data.remote.model.BasePagingResponse
 import com.agb.movielist.data.remote.service.MoviesApiService
+import com.agb.movielist.data.repository.mapper.toEntity
 import com.agb.movielist.data.repository.mapper.toLocalData
 import com.agb.movielist.domain.model.MovieDetails
 import com.agb.movielist.domain.repository.IMoviesRepository
@@ -18,19 +18,19 @@ class MoviesRepository @Inject constructor(
 ) : IMoviesRepository {
 
     override suspend fun getPopularMovies(): List<MovieDetails> {
-        return wrapPagingResponse { apiService.getPopularMovies() }.map { it.toEntity(MovieCategory.POPULAR) }
+        return wrapBasePagingResponse { apiService.getPopularMovies() }.map { it.toEntity(MovieCategory.POPULAR) }
     }
 
     override suspend fun getTopRatedMovies(): List<MovieDetails> {
-        return wrapPagingResponse { apiService.getTopRatedMovies() }.map { it.toEntity(MovieCategory.TOP_RATED) }
+        return wrapBasePagingResponse { apiService.getTopRatedMovies() }.map { it.toEntity(MovieCategory.TOP_RATED) }
     }
 
-    override suspend fun getMovieDetailsById(id:Int): MovieDetails {
+    override suspend fun getMovieDetailsById(id: Int): MovieDetails {
         return wrapResponse { apiService.getMovieDetailsById(id) }.toEntity()
     }
 
-    override suspend fun searchMoviesByKeyword(query: String): List<MovieDetails> {
-        return wrapPagingResponse { apiService.searchMoviesByKeyword(query) }.map { it.toEntity() }
+    override suspend fun searchMoviesByKeyword(query: String): List<MovieDetails>{
+        return wrapBasePagingResponse { apiService.searchMoviesByKeyword(query,1) }.map { it.toEntity() }
     }
 
     override suspend fun getMoviesByCategoryLocal(category: MovieCategory): List<MovieDetails> {
@@ -54,8 +54,7 @@ class MoviesRepository @Inject constructor(
         localDataSource.deleteAllMoviesLocal()
     }
 
-
-    private suspend fun <T> wrapPagingResponse(
+    private suspend fun <T> wrapBasePagingResponse(
         function: suspend () -> Response<BasePagingResponse<T>>
     ): List<T> {
         return try {

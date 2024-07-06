@@ -134,7 +134,7 @@ abstract class BaseViewModel<S, E>(initialState: S) : ViewModel(), BaseInteracti
         viewModelScope.launch(dispatcher) {
             try {
                 val result = call().cachedIn(viewModelScope)
-                result.collect { data ->
+                result.collectLatest { data ->
                     onSuccess(data)
                 }
             } catch (exception: Exception) {
@@ -146,8 +146,4 @@ abstract class BaseViewModel<S, E>(initialState: S) : ViewModel(), BaseInteracti
         }
     }
 
-
-    companion object {
-        const val MAX_PAGE_SIZE = 10
-    }
 }

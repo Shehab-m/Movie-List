@@ -1,7 +1,9 @@
 package com.agb.movielist.domain.repository
 
+import androidx.paging.PagingData
 import com.agb.movielist.domain.model.MovieDetails
 import com.agb.movielist.domain.utils.enums.MovieCategory
+import kotlinx.coroutines.flow.Flow
 
 interface IMoviesRepository {
 

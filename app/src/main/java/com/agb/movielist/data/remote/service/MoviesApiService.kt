@@ -21,6 +21,7 @@ interface MoviesApiService {
     @GET("search/movie")
     suspend fun searchMoviesByKeyword(
         @Query("query") query: String,
+        @Query("page") page: Int,
     ): Response<BasePagingResponse<MovieDetailsDto>>
 
 }

@@ -7,8 +7,7 @@ import javax.inject.Inject
 class SearchMoviesUseCase @Inject constructor(
     private val repository: IMoviesRepository
 ) {
-
-    suspend operator fun invoke(keyword: String): List<MovieDetails> {
+    suspend operator fun invoke(keyword: String): List<MovieDetails>{
         return repository.searchMoviesByKeyword(keyword)
     }
 

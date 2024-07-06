@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4"
-        app:tint="@color/md_theme_primary" />
+        app:tint="@color/md_theme_onPrimary" />
 
     <TextView
         android:id="@+id/text_no_result"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="No result found..."
-        android:textColor="@color/md_theme_primary"
+        android:textColor="@color/md_theme_onPrimary"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/image_no_result"
         app:layout_constraintHorizontal_bias="0.5"

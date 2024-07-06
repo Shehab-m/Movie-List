@@ -3,6 +3,7 @@ package com.agb.movielist.presentation.search
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import androidx.lifecycle.viewModelScope
 import com.agb.movielist.domain.model.MovieDetails
 import com.agb.movielist.domain.usecase.SearchMoviesUseCase
 import com.agb.movielist.presentation.base.BaseViewModel
@@ -10,9 +11,11 @@ import com.agb.movielist.presentation.base.ErrorState
 import com.agb.movielist.presentation.model.toSmallDetailsUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,7 +32,7 @@ class SearchViewModel @Inject constructor(
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            state.value.searchInput.update { s.toString() }
+            _state.value.searchInput.update { s.toString() }
         }
 
         override fun afterTextChanged(s: Editable?) {
@@ -48,13 +51,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun searchMovies(query: String) {
-        updateState {
-            it.copy(
-                isLoading = true,
-                movies = emptyList(),
-                isError = false,
-            )
-        }
+        updateState { it.copy(isLoading = true, isError = false) }
         tryToExecute(
             {
                 searchMoviesUseCase(query)
@@ -76,7 +73,6 @@ class SearchViewModel @Inject constructor(
     }
 
     override fun onClickItem(id: Int) {
-        Log.d("onClickMovie: ", id.toString())
         sendEffect(SearchUIEffect.NavigateToMovie(id))
     }
 

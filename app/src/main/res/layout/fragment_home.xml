@@ -11,8 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/md_theme_background">
+        android:layout_height="match_parent">
 
         <ImageButton
             android:id="@+id/button_search"
@@ -76,6 +75,7 @@
             app:items="@{viewModel.state.movies}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:spanCount="2"
             tools:listitem="@layout/item_movie_grid" />
 
@@ -83,7 +83,7 @@
             android:id="@+id/text_error"
             android:text="@string/error_while_loading"
             style="@style/TextAppearance.Material3.BodyLarge"
-            android:textColor="@color/md_theme_secondary"
+            android:textColor="@color/md_theme_onPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -97,7 +97,7 @@
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@color/md_theme_secondary"
+            android:backgroundTint="@color/md_theme_onPrimary"
             android:onClick="@{() -> viewModel.onClickRefresh()}"
             android:text="@string/refresh"
             app:layout_constraintEnd_toEndOf="@+id/text_error"
