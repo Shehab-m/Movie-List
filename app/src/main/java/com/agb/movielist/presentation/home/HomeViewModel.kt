@@ -56,7 +56,7 @@ class HomeViewModel @Inject constructor(
                 isLoading = true,
                 movies = emptyList(),
                 isError = false,
-                selectedCategory = MovieCategory.POPULAR
+                selectedCategory = MovieCategory.TOP_RATED
             )
         }
         tryToExecute(

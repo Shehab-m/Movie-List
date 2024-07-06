@@ -11,6 +11,8 @@ data class HomeUIState(
     val selectedCategory: MovieCategory = MovieCategory.POPULAR
 ) {
     val isDataVisible: Boolean = movies.isNotEmpty() && !isLoading
+    val isPopularSelected = selectedCategory == MovieCategory.POPULAR
+    val isTopRatedSelected = selectedCategory == MovieCategory.TOP_RATED
 }
 
 
