@@ -1,6 +1,9 @@
 package com.agb.movielist.data.repository
 
 import android.util.Log
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.agb.movielist.data.local.daos.MoviesDao
 import com.agb.movielist.data.remote.model.BasePagingResponse
 import com.agb.movielist.data.remote.service.MoviesApiService
@@ -9,6 +12,8 @@ import com.agb.movielist.data.repository.mapper.toLocalData
 import com.agb.movielist.domain.model.MovieDetails
 import com.agb.movielist.domain.repository.IMoviesRepository
 import com.agb.movielist.domain.utils.enums.MovieCategory
+import com.agb.movielist.data.repository.pager.SearchPagingSource
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -18,19 +23,32 @@ class MoviesRepository @Inject constructor(
 ) : IMoviesRepository {
 
     override suspend fun getPopularMovies(): List<MovieDetails> {
-        return wrapBasePagingResponse { apiService.getPopularMovies() }.map { it.toEntity(MovieCategory.POPULAR) }
+        return wrapBasePagingResponse { apiService.getPopularMovies() }.map {
+            it.toEntity(
+                MovieCategory.POPULAR
+            )
+        }
     }
 
     override suspend fun getTopRatedMovies(): List<MovieDetails> {
-        return wrapBasePagingResponse { apiService.getTopRatedMovies() }.map { it.toEntity(MovieCategory.TOP_RATED) }
+        return wrapBasePagingResponse { apiService.getTopRatedMovies() }.map {
+            it.toEntity(
+                MovieCategory.TOP_RATED
+            )
+        }
     }
 
     override suspend fun getMovieDetailsById(id: Int): MovieDetails {
         return wrapResponse { apiService.getMovieDetailsById(id) }.toEntity()
     }
 
-    override suspend fun searchMoviesByKeyword(query: String): List<MovieDetails>{
-        return wrapBasePagingResponse { apiService.searchMoviesByKeyword(query,1) }.map { it.toEntity() }
+
+    override suspend fun searchMoviesByKeyword(query: String): Flow<PagingData<MovieDetails>> {
+        val pager = Pager(
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            pagingSourceFactory = { SearchPagingSource(apiService, query) }
+        ).flow
+        return pager
     }
 
     override suspend fun getMoviesByCategoryLocal(category: MovieCategory): List<MovieDetails> {

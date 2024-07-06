@@ -3,7 +3,8 @@ package com.agb.movielist.presentation.search
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.map
 import com.agb.movielist.domain.model.MovieDetails
 import com.agb.movielist.domain.usecase.SearchMoviesUseCase
 import com.agb.movielist.presentation.base.BaseViewModel
@@ -11,11 +12,10 @@ import com.agb.movielist.presentation.base.ErrorState
 import com.agb.movielist.presentation.model.toSmallDetailsUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,7 +52,7 @@ class SearchViewModel @Inject constructor(
 
     private fun searchMovies(query: String) {
         updateState { it.copy(isLoading = true, isError = false) }
-        tryToExecute(
+        tryToExecutePaging(
             {
                 searchMoviesUseCase(query)
             },
@@ -61,9 +61,9 @@ class SearchViewModel @Inject constructor(
         )
     }
 
-    private fun onSuccessSearch(movies: List<MovieDetails>) {
+    private fun onSuccessSearch(movies: PagingData<MovieDetails>) {
         updateState {
-            it.copy(isLoading = false, movies = movies.map { it.toSmallDetailsUIState() })
+            it.copy(isLoading = false, movies = flowOf(movies.map { it.toSmallDetailsUIState() }) )
         }
     }
 

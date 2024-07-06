@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.agb.movielist.R
 import com.agb.movielist.databinding.FragmentSearchBinding
 import com.agb.movielist.presentation.base.BaseFragment
+import com.agb.movielist.presentation.search.adapter.SearchMoviePagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUIState, SearchUIEffect>() {
@@ -17,7 +21,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUIState, Search
     override val layoutIdFragment = R.layout.fragment_search
     override val viewModel: SearchViewModel by viewModels()
 
-    private lateinit var searchAdapter: SearchAdapter
+    private lateinit var searchAdapter: SearchMoviePagingAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,15 +31,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUIState, Search
     }
 
     private fun setAdapter() {
-        searchAdapter = SearchAdapter(mutableListOf(), viewModel)
+        searchAdapter = SearchMoviePagingAdapter(viewModel)
         binding.recyclerViewSearch.adapter = searchAdapter
     }
 
     private fun collectChange() {
-        binding.recyclerViewSearch.smoothScrollToPosition(0)
-        collectLatest {
-            viewModel.state.collect{ state ->
-                searchAdapter.setItems(state.movies)
+        lifecycleScope.launch {
+            viewModel.state.value.movies.collectLatest {
+                searchAdapter.submitData(it)
             }
         }
     }
@@ -51,7 +54,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUIState, Search
                 findNavController().navigateUp()
             }
         }
-
     }
 
     private fun setSearchFocus() {

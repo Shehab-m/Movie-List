@@ -23,5 +23,5 @@ interface IMoviesRepository {
 
     suspend fun getMovieDetailsById(id:Int): MovieDetails
 
-    suspend fun searchMoviesByKeyword(query: String): List<MovieDetails>
+    suspend fun searchMoviesByKeyword(query: String): Flow<PagingData<MovieDetails>>
 }

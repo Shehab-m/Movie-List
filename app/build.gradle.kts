@@ -107,6 +107,6 @@ dependencies {
     //KotlinX DateTime
     implementation(libs.kotlinx.datetime)
     //Paging
-    implementation("androidx.paging:paging-runtime:3.3.0")
+    implementation("androidx.paging:paging-runtime-ktx:3.3.0")
 
 }
