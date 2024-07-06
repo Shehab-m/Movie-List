@@ -10,8 +10,7 @@ data class SearchUIState(
     val errorMessage: String = "Error",
     val movies: List<MovieSmallDetailsUIState> = emptyList(),
 ) {
-    val isDataVisible: Boolean = true && !isLoading
-    val isResultEmpty: Boolean = false
+    val isResultEmpty: Boolean = movies.isEmpty()
 }
 
 
