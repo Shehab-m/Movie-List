@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.agb.movielist.presentation.home.HomeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_theme_background">
+
+        <ImageButton
+            android:id="@+id/button_search"
+            android:src="@drawable/ic_search"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="@{() -> viewModel.onClickSearch()}" />
+
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_16dp"
+            android:layout_marginEnd="@dimen/space_16dp"
+            android:scrollbars="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_search">
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:selectionRequired="true"
+                app:singleLine="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:onClick="@{() -> viewModel.onClickPopular()}"
+                    android:text="@string/popular"
+                    app:checkedIconVisible="false"
+                    app:chipIconVisible="false" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onClickTopRated()}"
+                    android:text="@string/top_rated"
+                    app:checkedIconVisible="false"
+                    app:chipIconVisible="false" />
+
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_home"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:padding="@dimen/space_12dp"
+            app:isVisible="@{viewModel.state.dataVisible}"
+            app:items="@{viewModel.state.movies}"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+            app:spanCount="2"
+            tools:listitem="@layout/item_movie_grid" />
+
+        <TextView
+            android:id="@+id/text_error"
+            android:text="@string/error_while_loading"
+            style="@style/TextAppearance.Material3.BodyLarge"
+            android:textColor="@color/md_theme_secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:isVisible="@{viewModel.state.error}" />
+
+        <Button
+            android:id="@+id/button_refresh"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/md_theme_secondary"
+            android:onClick="@{() -> viewModel.onClickRefresh()}"
+            android:text="@string/refresh"
+            app:layout_constraintEnd_toEndOf="@+id/text_error"
+            app:layout_constraintStart_toStartOf="@+id/text_error"
+            app:layout_constraintTop_toBottomOf="@+id/text_error"
+            app:isVisible="@{viewModel.state.error}" />
+
+        <include
+            android:id="@+id/loading_progress_home"
+            layout="@layout/loading_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:isVisible="@{viewModel.state.loading}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.agb.movielist.presentation.search.SearchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false">
+
+        <View
+            android:id="@+id/view_search_background"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/md_theme_secondary"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_text_search"
+            android:layout_marginBottom="-8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <EditText
+            android:id="@+id/edit_text_search"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/md_theme_onPrimary"
+            android:focusable="true"
+            android:paddingHorizontal="16dp"
+            android:singleLine="true"
+            android:hint="Search here"
+            android:textColor="@color/md_theme_primary"
+            android:textColorHint="@color/md_theme_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:textWatcher="@{viewModel.searchFieldWatcher}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_search"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:padding="12dp"
+            app:items="@{viewModel.state.movies}"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_text_search"
+            app:isVisible="@{viewModel.state.dataVisible}"
+            tools:listitem="@layout/item_movie_grid" />
+
+        <FrameLayout
+            android:id="@+id/frame_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:isVisible="@{viewModel.state.resultEmpty}">
+
+            <include
+                android:id="@+id/no_result_image"
+                layout="@layout/no_result_found" />
+
+        </FrameLayout>
+
+        <include
+            android:id="@+id/loading_progress_search"
+            layout="@layout/loading_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:isVisible="@{viewModel.state.loading}" />
+
+        <TextView
+            android:id="@+id/text_error"
+            android:text="@string/error_while_loading"
+            style="@style/TextAppearance.Material3.BodyLarge"
+            android:textColor="@color/md_theme_secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:isVisible="@{viewModel.state.error}" />
+
+        <Button
+            android:id="@+id/button_refresh"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/md_theme_secondary"
+            android:onClick="@{() -> viewModel.onClickRefresh()}"
+            android:text="@string/refresh"
+            app:layout_constraintEnd_toEndOf="@+id/text_error"
+            app:layout_constraintStart_toStartOf="@+id/text_error"
+            app:layout_constraintTop_toBottomOf="@+id/text_error"
+            app:isVisible="@{viewModel.state.error}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
