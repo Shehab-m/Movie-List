@@ -72,14 +72,14 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.48")
-    kapt("com.google.dagger:hilt-android-compiler:2.48")
-    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation(libs.hilt.android.v248)
+    kapt(libs.hilt.android.compiler.v248)
+    implementation(libs.work.runtime.ktx)
     // WorkManager
-    implementation ("androidx.work:work-runtime-ktx:2.9.0")
+    implementation (libs.work.runtime.ktx)
     // Hilt extension for WorkManager
-    implementation ("androidx.hilt:hilt-work:1.2.0")
-    kapt ("androidx.hilt:hilt-compiler:1.2.0")
+    implementation (libs.androidx.hilt.work)
+    kapt (libs.androidx.hilt.compiler)
     kapt(libs.hilt.android.compiler)
     // Retrofit
     implementation(libs.retrofit)
@@ -107,6 +107,5 @@ dependencies {
     //KotlinX DateTime
     implementation(libs.kotlinx.datetime)
     //Paging
-    implementation("androidx.paging:paging-runtime:3.3.0")
-
+    implementation(libs.androidx.paging.runtime)
 }
