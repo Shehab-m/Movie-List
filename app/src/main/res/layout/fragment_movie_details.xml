@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/md_theme_background">
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:id="@+id/image_view_comic_image2"
@@ -47,12 +48,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:textColor="@color/white"
             android:layout_marginHorizontal="@dimen/space_16dp"
             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_view_comic_image2"
             app:text='@{"Release Date: " + viewModel.state.movie.releaseDate}'
-            tools:text="2022-10-2" />
+            tools:text="Release Date: 2022-10-2" />
+
+        <TextView
+            android:id="@+id/text_comic_vote_average"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginHorizontal="@dimen/space_16dp"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_view_comic_image2"
+            app:text='@{"Vote: " + viewModel.state.movie.voteAverage}'
+            tools:text="Vote: 5.6" />
 
         <TextView
             android:id="@+id/text_comic_date"
@@ -60,12 +75,13 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_16dp"
             android:layout_marginTop="8dp"
+            android:textColor="@color/white"
             android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_comic_overview"
             app:text='@{"Overview: " + viewModel.state.movie.overview}'
-            tools:text="Overview" />
+            tools:text="Overview: this is overview" />
 
         <Button
             android:id="@+id/back_button"

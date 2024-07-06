@@ -6,8 +6,9 @@ data class MovieBigDetailsUIState (
     val id: Int = 0,
     val title: String = "",
     val posterPath: String = "",
-    val releaseDate: String = "No Data",
-    val overview: String = "No Data",
+    val releaseDate: String = "",
+    val overview: String = "",
+    val voteAverage: String = ""
 )
 
 fun MovieDetails.toBigDetailsUIState(): MovieBigDetailsUIState {
@@ -16,6 +17,7 @@ fun MovieDetails.toBigDetailsUIState(): MovieBigDetailsUIState {
         posterPath = posterPath,
         releaseDate = releaseDate,
         title = title,
-        overview = overview
+        overview = overview,
+        voteAverage = voteAverage.toString()
     )
 }
