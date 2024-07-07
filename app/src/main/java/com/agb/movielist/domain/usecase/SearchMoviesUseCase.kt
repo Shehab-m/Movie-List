@@ -11,7 +11,6 @@ class SearchMoviesUseCase @Inject constructor(
     private val repository: IMoviesRepository
 ) {
     suspend operator fun invoke(keyword: String): Flow<PagingData<MovieDetails>> {
-        Log.d( "Search Paging: ","USECASE")
         return repository.searchMoviesByKeyword(keyword)
     }
 

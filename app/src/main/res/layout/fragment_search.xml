@@ -58,18 +58,6 @@
 
             tools:listitem="@layout/item_movie_grid" />
 
-        <FrameLayout
-            android:id="@+id/frame_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:isVisible="@{viewModel.state.resultEmpty}">
-
-            <include
-                android:id="@+id/no_result_image"
-                layout="@layout/no_result_found" />
-
-        </FrameLayout>
-
         <include
             android:id="@+id/loading_progress_search"
             layout="@layout/loading_progress"

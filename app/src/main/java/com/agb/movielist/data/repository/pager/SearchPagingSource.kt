@@ -14,18 +14,15 @@ class SearchPagingSource(
 ) : PagingSource<Int, MovieDetails>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieDetails> {
-        val position = params.key ?: STARTING_PAGE_INDEX
+        val page = params.key ?: STARTING_PAGE_INDEX
         return try {
-            val response = service.searchMoviesByKeyword(query, position)
+            val response = service.searchMoviesByKeyword(query, page)
             val movies = response.body()?.results?.map { it.toEntity() } ?: emptyList()
-            val nextKey = if (movies.isEmpty()) {
-                null
-            } else {
-                position + 1
-            }
+            val nextKey = if (movies.isEmpty()) null else page + 1
+            val prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1
             LoadResult.Page(
                 data = movies,
-                prevKey = if (position == STARTING_PAGE_INDEX) null else position - 1,
+                prevKey = prevKey,
                 nextKey = nextKey
             )
         } catch (exception: IOException) {

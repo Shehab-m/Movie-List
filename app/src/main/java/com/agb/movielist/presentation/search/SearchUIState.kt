@@ -12,9 +12,7 @@ data class SearchUIState(
     val searchInput: MutableStateFlow<String> = MutableStateFlow(""),
     val errorMessage: String = "Error",
     val movies: Flow<PagingData<MovieSmallDetailsUIState>> = flowOf(),
-) {
-    val isResultEmpty: Boolean = movies.isEmpty() && !isLoading
-}
+)
 
 
 

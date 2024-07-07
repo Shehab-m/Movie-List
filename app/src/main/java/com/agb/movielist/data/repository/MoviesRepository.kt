@@ -44,11 +44,10 @@ class MoviesRepository @Inject constructor(
 
 
     override suspend fun searchMoviesByKeyword(query: String): Flow<PagingData<MovieDetails>> {
-        val pager = Pager(
+        return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = { SearchPagingSource(apiService, query) }
         ).flow
-        return pager
     }
 
     override suspend fun getMoviesByCategoryLocal(category: MovieCategory): List<MovieDetails> {
