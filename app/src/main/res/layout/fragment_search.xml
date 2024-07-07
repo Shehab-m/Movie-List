@@ -35,7 +35,7 @@
             android:background="@color/black"
             android:paddingHorizontal="16dp"
             android:singleLine="true"
-            android:hint="Search here"
+            android:hint="@string/search_here"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

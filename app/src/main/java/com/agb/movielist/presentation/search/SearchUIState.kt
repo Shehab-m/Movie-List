@@ -13,8 +13,7 @@ data class SearchUIState(
     val errorMessage: String = "Error",
     val movies: Flow<PagingData<MovieSmallDetailsUIState>> = flowOf(),
 ) {
-    val isDataVisible: Boolean = true && !isLoading
-    val isResultEmpty: Boolean = false
+    val isResultEmpty: Boolean = movies.isEmpty() && !isLoading
 }
 
 

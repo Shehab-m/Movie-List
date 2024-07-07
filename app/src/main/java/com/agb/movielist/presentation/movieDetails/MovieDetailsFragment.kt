@@ -16,12 +16,6 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDeta
     override val layoutIdFragment = R.layout.fragment_movie_details
     override val viewModel: MovieDetailsViewModel by viewModels()
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
     override fun onEvent(event: MovieDetailsUIEffect) {
         when (event) {
             is MovieDetailsUIEffect.NavigateToMovie -> {
